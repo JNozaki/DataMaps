@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>DataMapsDE</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+<link rel="stylesheet" href="./mainstyle.css">
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js"></script>
+<style>
+    body { margin: 0; padding: 0; }
+    #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+    .mapboxgl-popup {
+        max-width: 400px;
+        font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+}
+</style> 
+</head>
+
+<body>
+<div class="DE-top">
+    <div class="DE-bar DE-white DE-wide DE-padding DE-card">
+        <a href = "#home" class = "DE-bar-item DE-button"><b>DataMapsDE</b></a>
+        <div class = "DE-right DE-hide-small">
+            <a href="#about" class="DE-bar-item DE-button">About</a>
+            <a href="#contact" class="DE-bar-item DE-button">Contact</a>
+        </div>
+    </div>
+</div>
+<div id="map"></div>
+<script>
+	mapboxgl.accessToken = 'pk.eyJ1Ijoiam5vemFraSIsImEiOiJja3p6eGx1amMwZW43M2N0ZmxzbnlpY2RhIn0.IfWwlO-YRixrKtt1c_6qcw';
+    const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/jnozaki/cl0akmhhc003316qty3c4etod',
+        center: [10.4515, 51.1657],
+        zoom: 5.2
+    });
+    let hoveredStateId = null;
+
+    map.on('load', () => {
+        map.addSource('states', {
+            'type': 'geojson',
+            'data': 'https://raw.githubusercontent.com/JNozaki/DataMaps/main/dataBundesLander.geojson?token=GHSAT0AAAAAABTC3TAFXKD5S467LVTIA7LIYSO7FHA'
+        });
+
+        // The feature-state dependent fill-opacity expression will render the hover effect
+        // when a feature's hover state is set to true.
+        map.addLayer({
+            'id': 'state-fills',
+            'type': 'fill',
+            'source': 'states',
+            'layout': {},
+            'paint': {
+                'fill-color': '#c9c9c9',
+                'fill-opacity': [
+                    'case',
+                    ['boolean', ['feature-state', 'hover'], false],
+                    .3,
+                    0
+                ]
+            }
+        });
+
+
+
+        // When the user moves their mouse over the state-fill layer, we'll update the
+        // feature state for the feature under the mouse.
+        map.on('mousemove', 'state-fills', (e) => {
+            if (e.features.length > 0) {
+                if (hoveredStateId !== null) {
+                    map.setFeatureState(
+                        { source: 'states', id: hoveredStateId },
+                        { hover: false }
+                    );
+                }
+                hoveredStateId = e.features[0].id;
+                map.setFeatureState(
+                    { source: 'states', id: hoveredStateId },
+                    { hover: true }
+                );
+                map.getCanvas().style.cursor = 'pointer';
+            }
+        });
+
+        // When the mouse leaves the state-fill layer, update the feature state of the
+        // previously hovered feature.
+        // Change the cursor back to a pointer
+        // when it leaves the states layer.
+        map.on('mouseleave', 'state-fills', () => {
+            if (hoveredStateId !== null) {
+                map.setFeatureState(
+                    { source: 'states', id: hoveredStateId },
+                    { hover: false }
+                );
+                map.getCanvas().style.cursor = '';
+            }
+            hoveredStateId = null;
+        });
+
+
+
+        // When a click event occurs on a feature in the states layer,
+        // open a popup at the location of the click, with description
+        // HTML from the click event's properties.
+        map.on('click', 'state-fills', (e) => {
+            new mapboxgl.Popup()
+                .setLngLat(e.lngLat)
+                .setHTML(e.features[0].properties.VARNAME_1)
+                .addTo(map);
+        });
+    
+        // Change the cursor to a pointer when
+        // the mouse is over the states layer.
+        // map.on('mouseenter', 'states-layer', () => {
+            
+        // });
+        
+    });
+</script>
+
+</body>
+</html>
