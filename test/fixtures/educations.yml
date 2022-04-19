@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  state: one
+  in_school: 1
+  high_school: 1
+  college_university: 1
+  never_diploma: 1
+
+two:
+  state: two
+  in_school: 1
+  high_school: 1
+  college_university: 1
+  never_diploma: 1

@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  state: one
+  household: 1
+  male_hourly: 1
+  female_hourly: 1
+
+two:
+  state: two
+  household: 1
+  male_hourly: 1
+  female_hourly: 1
