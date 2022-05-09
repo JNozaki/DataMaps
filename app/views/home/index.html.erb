@@ -7,6 +7,7 @@
     </div>
   </div>
 </div>
+
 <div id="map"></div>
 <script>
 	mapboxgl.accessToken = 'pk.eyJ1Ijoiam5vemFraSIsImEiOiJja3p6eGx1amMwZW43M2N0ZmxzbnlpY2RhIn0.IfWwlO-YRixrKtt1c_6qcw';
@@ -79,15 +80,18 @@
         });
 
 
-
         // When a click event occurs on a feature in the states layer,
         // open a popup at the location of the click, with description
         // HTML from the click event's properties.
         map.on('click', 'state-fills', (e) => {
-            new mapboxgl.Popup()
-                .setLngLat(e.lngLat)
-                .setHTML(e.features[0].properties.VARNAME_1)
-                .addTo(map);
+             new mapboxgl.Popup()
+                 .setLngLat(e.lngLat)
+                 .setHTML('<b><a href="' + e.features[0].properties.ABV + '">' + e.features[0].properties.VARNAME_1 + '</a></b>')
+                 //var site = e.features[0].properties.ABV
+                 //.setHTML(<A HREF="/nrw">About this site</A>)
+                 .addTo(map);
+        
+            
         });
     
         // Change the cursor to a pointer when
@@ -166,3 +170,4 @@
         
     });
 </script>
+
