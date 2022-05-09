@@ -1,2 +1,33 @@
-<h1>Home#contact</h1>
-<p>Find me in app/views/home/contact.html.erb</p>
+<div class="DE-top">
+  <div class="DE-bar DE-white DE-wide DE-padding DE-card">
+    <a href = "#home" class = "DE-bar-item DE-button"><b>DataMapsDE</b></a>
+    <div class = "DE-right DE-hide-small">
+      <a href="#about" class="DE-bar-item DE-button">About</a>
+      <a href="#contact" class="DE-bar-item DE-button">Contact</a>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div style="text-align:center">
+    <h2>Contact Us</h2>
+    <p>Leave me a message! Feel free to suggest data corrections, additional sources, questions, or comments!</p>
+  </div>
+  <div class="row">
+    <div class="column">
+      <img src="IMG_5749.jpeg" style="width:100%">
+    </div>
+    <div class="column">
+      <form action="/action_page.php">
+        <label for="fname">First Name</label>
+        <input type="text" id="fname" name="firstname" placeholder="Your name..">
+        <label for="lname">Last Name</label>
+        <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+        <label for="lname">E-Mail</label>
+        <input type="text" id="email" name="email" placeholder="Your email..">
+        <label for="email">Message</label>
+        <textarea id="message" name="message" placeholder="Write something.." style="height:170px"></textarea>
+        <input type="submit" value="Submit">
+      </form>
+    </div>
+  </div>
+</div>
